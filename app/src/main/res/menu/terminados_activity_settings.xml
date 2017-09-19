@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".GridActivity">
+    <item
+        android:id="@+id/actualizar_lista_terminados"
+        android:title="Actualizar Lista"
+        android:orderInCategory="150"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/atras_terminados"
+        android:title="Atrás"
+        android:orderInCategory="150"
+        app:showAsAction="never" />
+</menu>

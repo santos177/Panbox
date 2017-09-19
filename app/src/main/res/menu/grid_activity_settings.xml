@@ -1,0 +1,29 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".GridActivity">
+    <item
+        android:id="@+id/agregar_cliente"
+        android:title="Agregar Cliente"
+        android:orderInCategory="150"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/opcion_2"
+        android:title="opcion_2"
+        android:orderInCategory="150"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/opcion_3"
+        android:title="opcion_3"
+        android:orderInCategory="150"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/opcion_4"
+        android:title="opcion_4"
+        android:orderInCategory="150"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/desconectar_grid"
+        android:title="Desconectarse"
+        android:orderInCategory="150"
+        app:showAsAction="never" />
+</menu>
