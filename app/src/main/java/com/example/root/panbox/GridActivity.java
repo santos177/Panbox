@@ -1,5 +1,7 @@
 package com.example.root.panbox;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -51,7 +53,7 @@ public class GridActivity extends AppCompatActivity {
     final Context context = this;
     private Integer buffer = 0;
     private Integer vacio = 0;
-
+    String Cliente;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,18 +121,11 @@ public class GridActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
 
-
-            for (int i = 0; i < 3; i++) {
-                //INICIO CAMBIO JAIME
-                Product temp = new Product("1", "2", "3", "4", "5", "6", "Palomo", "8", "9", "10", "11", "12", "13");
-                //FIN CAMBIO JAIME
+             String [] Clientes= {"Palomo","Libertad","Alicia","Pedro","Juan"};
+            for (int i = 0; i < Clientes.length; i++) {
+                Product temp = new Product("1", "2", "3", "4", "5", "6", Clientes[i], "8", "9", "10", "11", "12", "13");
                 productList.add(temp);
-                Product temp1 = new Product("1", "2", "3", "4", "5", "6", "Libertad", "8", "9", "10", "11", "12", "13");
-                //FIN CAMBIO JAIME
-                productList.add(temp1);
-                Product temp2 = new Product("1", "2", "3", "4", "5", "6", "Alicia", "8", "9", "10", "11", "12", "13");
-                productList.add(temp2);
-
+                //initDatabase();
             }
             setConfigGrid();
         return null;
@@ -150,7 +145,7 @@ public class GridActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     Intent intent = new Intent(getApplicationContext(), ClienteActivity.class);  //Instanciamos un intent, que es llamar a GridLayout
                     finish();
-                    String Cliente = productList.get(i).getDate_p();
+                    Cliente = productList.get(i).getDate_p();
                     intent.putExtra("Cliente",Cliente);
                     startActivity(intent);
 
@@ -164,6 +159,14 @@ public class GridActivity extends AppCompatActivity {
     public void onBackPressed() {
 
     }
+
+
+
+
+
+
+
+
 
 }
 

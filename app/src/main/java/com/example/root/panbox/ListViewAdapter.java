@@ -41,7 +41,7 @@ public class ListViewAdapter extends ArrayAdapter<Product> {
 
         txtTitle.setText(product.getTitle());
        // txtFolio.setText("Documento n° ".concat(product.getDocument_n()));
-        txtDirection.setText(product.getDirection());
+       // txtDirection.setText(product.getDirection());
         txtDate.setText(product.getDate_p());
         return v;
     }

@@ -1,39 +1,30 @@
 package com.example.root.panbox;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.graphics.PorterDuff;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
-import android.os.Environment;
-import android.os.StrictMode;
-import android.provider.MediaStore;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import static android.os.Build.VERSION_CODES.M;
+import android.widget.Toast;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase.CursorFactory;
+
+
+
 
 public class ClienteActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -49,24 +40,22 @@ public class ClienteActivity extends AppCompatActivity implements View.OnClickLi
     private static String _bytes64Sting, _imageFileName;
     public static String URL = "http://appdispatcher.ctac.cl/Dispatcher/uploadImage.php";
     Context context;
-    String mCurrentPhotoPath;
+    String mCurrentPhotoPath,nombre_cliente;
     EditText precio_unitario,saldo_anterior,saldo,total, total_pan;
 
-    //Datos cliente
-    String direccion_c, nombre_c, telefono_c, hora_c, descripcion_c;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle extras = getIntent().getExtras();
-
-
         precio_unitario = (EditText) findViewById(R.id.n_documento);
         total_pan = (EditText) findViewById(R.id.tipo);
         saldo_anterior = (EditText) findViewById(R.id.tipo);
         total = (EditText) findViewById(R.id.fecha_hora);
         saldo= (EditText) findViewById(R.id.e_saldo);
-
+        nombre_cliente = extras.getString("Cliente");
+        Consulta();
         //Allowing Strict mode policy for Nougat support
         //StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         //StrictMode.setVmPolicy(builder.build());
@@ -74,7 +63,7 @@ public class ClienteActivity extends AppCompatActivity implements View.OnClickLi
         getWindow().setBackgroundDrawableResource(R.drawable.gradient);
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
-        setTitle(extras.getString("Cliente"));
+        setTitle(nombre_cliente);
        // setTitle("Nombre del Cliente");
         //Quitar multilinea
 
@@ -113,6 +102,36 @@ public class ClienteActivity extends AppCompatActivity implements View.OnClickLi
         startActivity(intent);
 
     }
+
+
+    public void Consulta() {
+
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
+
+                "administracion", null, 1);
+        SQLiteDatabase bd = admin.getWritableDatabase();
+
+
+        Cursor fila = bd.rawQuery("select precio_unitario from clientes where nombre_cliente='"+nombre_cliente+"'", null);
+
+        if (fila.moveToFirst()) {
+
+            precio_unitario.setText(fila.getString(1));
+            /*total_pan.setText(fila.getString(2));
+            saldo_anterior.setText(fila.getString(3));
+            total.setText(fila.getString(4));
+            saldo.setText(fila.getString(5));*/
+
+        } else
+
+            Toast.makeText(this, "No existe ningún cliente con ese nombre",
+
+                    Toast.LENGTH_SHORT).show();
+
+        bd.close();
+
+    }
+
 
 
 
