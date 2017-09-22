@@ -22,13 +22,13 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         //aquí creamos la tabla de usuario ( nombre_cliente, precio unitario, total pan,saldo anterior,total,saldo)
-        db.execSQL("create table clientes (nombre_cliente text, precio_unitario integer, total_pan integer, saldo_anterior integer,total integer,saldo integer)");
+        db.execSQL("create table clientes ( nombre_cliente text, precio_unitario integer, total_pan integer, saldo_anterior integer,total integer,saldo integer)");
         String [] Clientes= {"Palomo","Libertad","Alicia","Pedro","Juan"};
-       /* for (int i = 0; i < Clientes.length; i++) {
+        for (int i = 0; i < Clientes.length; i++) {
             db.execSQL("insert into clientes (nombre_cliente) VALUES ('"+ Clientes[i] +"')");
-        }*/
+        }
 
-        db.execSQL("insert into clientes nombre_cliente values ('"+ Clientes[0] +"')");
+       // db.execSQL("insert into clientes (nombre_cliente,precio_unitario) values ('"+Clientes[0]+"','"+precio_unitario+"')");
     }
 
 
@@ -37,7 +37,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
 
         db.execSQL("drop table if exists clientes");
 
-        db.execSQL("create table clientes(id integer primary key, precio_unitario integer, total_pan float, saldo_anterior integer,saldo integer)");
+        db.execSQL("create table clientes(nombre_cliente text, precio_unitario integer, total_pan float, saldo_anterior integer,saldo integer)");
 
     }
 
