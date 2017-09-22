@@ -45,6 +45,7 @@ public class ClienteActivity extends AppCompatActivity {
     String mCurrentPhotoPath,nombre_cliente;
     EditText precio_unitario,saldo_anterior,saldo,total, total_pan;
     Button button;
+    int saldo_anterior_int,total_int;
 
 
 
@@ -56,8 +57,8 @@ public class ClienteActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         precio_unitario = (EditText) findViewById(R.id.n_documento);
         total_pan = (EditText) findViewById(R.id.tipo);
-        saldo_anterior = (EditText) findViewById(R.id.tipo);
-        total = (EditText) findViewById(R.id.fecha_hora);
+        saldo_anterior = (EditText) findViewById(R.id.fecha_hora);
+        total = (EditText) findViewById(R.id.hora);
         saldo= (EditText) findViewById(R.id.e_saldo);
         nombre_cliente = extras.getString("Cliente");
         Consulta();
@@ -82,13 +83,26 @@ public class ClienteActivity extends AppCompatActivity {
                 String tl = total.getText().toString();
                 String so = saldo.getText().toString();
 
+                // se generan los cálculos : saldo anterior-total = saldo
+                if ((sa !="") && (tl != "")) {
+                    saldo_anterior_int = Integer.parseInt(sa);
+                    total_int = Integer.parseInt(tl);
+                }else {
+                    saldo_anterior_int = 0;
+                    total_int = 0;
+                }
+                int saldo = saldo_anterior_int - total_int;
+                   // convertimos el saldo a String:
+                String saldo_string = String.valueOf(saldo);
+
                 ContentValues registro = new ContentValues();
 
                 registro.put("precio_unitario", pu);
                 registro.put("total_pan", tp);
                 registro.put("saldo_anterior", sa);
                 registro.put("total", tl);
-                registro.put("saldo", so);
+                //registro.put("saldo",so);
+                registro.put("saldo", saldo_string);
                 // los inserto en la base de datos
                 int cant = bd.update("clientes", registro, "nombre_cliente='" + nombre_cliente + "'", null);
 
@@ -97,9 +111,7 @@ public class ClienteActivity extends AppCompatActivity {
                 if (cant == 1) {
 
                     Toast.makeText(getApplicationContext(), "Datos modificados con éxito", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), GridActivity.class);  //Instanciamos un intent, que es llamar a GridLayout
-                    finish();
-                    startActivity(intent);
+                    Consulta();
                 } else {
                     Toast.makeText(getApplicationContext(), "No existe usuario", Toast.LENGTH_SHORT).show();
                 }
@@ -146,7 +158,7 @@ public class ClienteActivity extends AppCompatActivity {
         Cursor fila = bd.rawQuery("select precio_unitario, total_pan, saldo_anterior, total, saldo from clientes where nombre_cliente='"+nombre_cliente+"'", null);
 
         if (fila.moveToFirst()) {
-            Toast.makeText(getApplicationContext(),"posicion columna 2:"+fila.getString(0),Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(),"posicion columna 2:"+fila.getString(0),Toast.LENGTH_SHORT).show();
              precio_unitario.setText(fila.getString(0));
              total_pan.setText(fila.getString(1));
             saldo_anterior.setText(fila.getString(2));

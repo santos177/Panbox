@@ -107,7 +107,9 @@ public class GridActivity extends AppCompatActivity {
 
                 return true;
             case R.id.desconectar_grid:
-
+                Intent intent2 = new Intent(getApplicationContext(), LoginActivity.class);  //Instanciamos un intent, que es llamar a GridLayout
+                finish();
+                startActivity(intent2);
 
             default:
                 return super.onOptionsItemSelected(item);
