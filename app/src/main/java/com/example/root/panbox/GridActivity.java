@@ -97,8 +97,10 @@ public class GridActivity extends AppCompatActivity {
                 //Aquí recargar stublist
 
                 return true;
-            case R.id.opcion_2:
-
+            case R.id.balance:
+                Intent intent3 = new Intent(getApplicationContext(), BalanceActivity.class);  //Instanciamos un intent, que es llamar a GridLayout
+                finish();
+                startActivity(intent3);
                 return true;
             case R.id.opcion_3:
 

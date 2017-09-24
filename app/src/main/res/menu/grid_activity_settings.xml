@@ -7,8 +7,8 @@
         android:orderInCategory="150"
         app:showAsAction="never" />
     <item
-        android:id="@+id/opcion_2"
-        android:title="opcion_2"
+        android:id="@+id/balance"
+        android:title="Balance"
         android:orderInCategory="150"
         app:showAsAction="never" />
     <item

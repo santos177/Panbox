@@ -141,7 +141,7 @@ public class ClienteActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(getApplicationContext(), GridActivity.class);  //Instanciamos un intent, que es llamar a GridLayout
-        finish();
+        //finish();
         startActivity(intent);
 
     }
