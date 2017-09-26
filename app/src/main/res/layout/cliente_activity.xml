@@ -95,7 +95,7 @@
                     android:layout_below="@id/t_tipo"
                     android:layout_marginTop="10dp"
                     android:maxLines="1"
-                    android:inputType="phone"
+                    android:inputType="numberDecimal"
                     android:digits="1234567890"
 
                     />

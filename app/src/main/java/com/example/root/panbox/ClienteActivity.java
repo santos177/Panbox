@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,7 +46,6 @@ public class ClienteActivity extends AppCompatActivity {
     String mCurrentPhotoPath,nombre_cliente;
     EditText precio_unitario,saldo_anterior,saldo,total, total_pan;
     Button button;
-    int saldo_anterior_int,total_int;
 
 
 
@@ -57,6 +57,7 @@ public class ClienteActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         precio_unitario = (EditText) findViewById(R.id.n_documento);
         total_pan = (EditText) findViewById(R.id.tipo);
+        total_pan.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
         saldo_anterior = (EditText) findViewById(R.id.fecha_hora);
         total = (EditText) findViewById(R.id.hora);
         saldo= (EditText) findViewById(R.id.e_saldo);
@@ -86,18 +87,17 @@ public class ClienteActivity extends AppCompatActivity {
                     SQLiteDatabase bd = admin.getWritableDatabase();
 
 
-                    // se generan los cálculos : saldo anterior-total = saldo
-                    if ((!sa.equals("")) && (!tl.equals(""))) {
-                        saldo_anterior_int = Integer.parseInt(sa);
-                        total_int = Integer.parseInt(tl);
-                    } else {
-                        saldo_anterior_int = 0;
-                        total_int = 0;
-                    }
-                    int saldo = saldo_anterior_int - total_int;
+                    // se generan los cálculos : saldo anterior+(precio_unitario*total_pan)-total = saldo
+                    int precio_unitario_int = Integer.parseInt(pu);
+                    float total_pan_float = Float.parseFloat(tp);
+                    int saldo_anterior_int = Integer.parseInt(sa);
+                    int total_int = Integer.parseInt(tl);
+                    float print = (precio_unitario_int*total_pan_float);
+                    int saldo = (int) (saldo_anterior_int+(precio_unitario_int*total_pan_float) - total_int);
                     // convertimos el saldo a String:
                     String saldo_string = String.valueOf(saldo);
 
+                    Toast.makeText(getApplicationContext(), "precio unitario * total pan ="+print, Toast.LENGTH_SHORT).show();
                     ContentValues registro = new ContentValues();
 
                     registro.put("precio_unitario", pu);

@@ -23,7 +23,7 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/desconectar_grid"
-        android:title="Desconectarse"
+        android:title="Cerrar Sesión"
         android:orderInCategory="150"
         app:showAsAction="never" />
 </menu>
