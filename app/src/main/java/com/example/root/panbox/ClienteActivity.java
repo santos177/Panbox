@@ -73,47 +73,53 @@ public class ClienteActivity extends AppCompatActivity {
         //Quitar multilinea
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getApplicationContext(), "administracion", null, 1);
-
-                SQLiteDatabase bd = admin.getWritableDatabase();
-
                 String pu = precio_unitario.getText().toString();
                 String tp = total_pan.getText().toString();
                 String sa = saldo_anterior.getText().toString();
                 String tl = total.getText().toString();
                 String so = saldo.getText().toString();
 
-                // se generan los cálculos : saldo anterior-total = saldo
-                if ((sa !="") && (tl != "")) {
-                    saldo_anterior_int = Integer.parseInt(sa);
-                    total_int = Integer.parseInt(tl);
-                }else {
-                    saldo_anterior_int = 0;
-                    total_int = 0;
-                }
-                int saldo = saldo_anterior_int - total_int;
-                   // convertimos el saldo a String:
-                String saldo_string = String.valueOf(saldo);
+                if ((!pu.equals("")) && (!tp.equals("")) && (!sa.equals("")) && (!tl.equals(""))) {
 
-                ContentValues registro = new ContentValues();
+                    AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getApplicationContext(), "administracion", null, 1);
 
-                registro.put("precio_unitario", pu);
-                registro.put("total_pan", tp);
-                registro.put("saldo_anterior", sa);
-                registro.put("total", tl);
-                //registro.put("saldo",so);
-                registro.put("saldo", saldo_string);
-                // los inserto en la base de datos
-                int cant = bd.update("clientes", registro, "nombre_cliente='" + nombre_cliente + "'", null);
+                    SQLiteDatabase bd = admin.getWritableDatabase();
 
-                bd.close();
 
-                if (cant == 1) {
+                    // se generan los cálculos : saldo anterior-total = saldo
+                    if ((!sa.equals("")) && (!tl.equals(""))) {
+                        saldo_anterior_int = Integer.parseInt(sa);
+                        total_int = Integer.parseInt(tl);
+                    } else {
+                        saldo_anterior_int = 0;
+                        total_int = 0;
+                    }
+                    int saldo = saldo_anterior_int - total_int;
+                    // convertimos el saldo a String:
+                    String saldo_string = String.valueOf(saldo);
 
-                    Toast.makeText(getApplicationContext(), "Datos modificados con éxito", Toast.LENGTH_SHORT).show();
-                    Consulta();
+                    ContentValues registro = new ContentValues();
+
+                    registro.put("precio_unitario", pu);
+                    registro.put("total_pan", tp);
+                    registro.put("saldo_anterior", sa);
+                    registro.put("total", tl);
+                    //registro.put("saldo",so);
+                    registro.put("saldo", saldo_string);
+                    // los inserto en la base de datos
+                    int cant = bd.update("clientes", registro, "nombre_cliente='" + nombre_cliente + "'", null);
+
+                    bd.close();
+
+                    if (cant == 1) {
+
+                        Toast.makeText(getApplicationContext(), "Datos modificados con éxito", Toast.LENGTH_SHORT).show();
+                        Consulta();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "No existe usuario", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(getApplicationContext(), "No existe usuario", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Faltan datos a ingresar", Toast.LENGTH_SHORT).show();
                 }
             }
         });
