@@ -1,22 +1,15 @@
 package com.example.root.panbox;
 
-import android.content.ContentValues;
+import android.content.DialogInterface;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
-import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,28 +17,15 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewStub;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Field;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
 
 public class GridActivity extends AppCompatActivity {
-
     private ViewStub stubList;
     private ListView listView;
     private ListViewAdapter listViewAdapter;
@@ -54,6 +34,7 @@ public class GridActivity extends AppCompatActivity {
     private Integer buffer = 0;
     private Integer vacio = 0;
     String Cliente;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,8 +75,34 @@ public class GridActivity extends AppCompatActivity {
         String usuario = preferences.getString("correo", "");
         switch (item.getItemId()) {
             case R.id.agregar_cliente:
-                //Aquí recargar stublist
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        context);
+                final EditText nombre_e = new EditText(GridActivity.this);
+                alertDialogBuilder.setTitle("Agrega El Nuevo Cliente");
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT);
+                nombre_e.setLayoutParams(lp);
+                alertDialogBuilder.setView(nombre_e);
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("Continuar",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                String cliente = nombre_e.getText().toString();
+                                AddClient(cliente);
+                                Intent intent2 = new Intent(getApplicationContext(), GridActivity.class);  //Instanciamos un intent, que es llamar a GridLayout
+                                startActivity(intent2);
 
+                            }
+                        })
+                        .setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        });
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
                 return true;
             case R.id.balance:
                 Intent intent3 = new Intent(getApplicationContext(), BalanceActivity.class);  //Instanciamos un intent, que es llamar a GridLayout
@@ -109,9 +116,9 @@ public class GridActivity extends AppCompatActivity {
 
                 return true;
             case R.id.desconectar_grid:
-                Intent intent2 = new Intent(getApplicationContext(), LoginActivity.class);  //Instanciamos un intent, que es llamar a GridLayout
+                Intent intent4 = new Intent(getApplicationContext(), LoginActivity.class);  //Instanciamos un intent, que es llamar a GridLayout
                 finish();
-                startActivity(intent2);
+                startActivity(intent4);
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -124,18 +131,16 @@ public class GridActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
-
-             String [] Clientes= {"Palomo","Libertad","Alicia","Pedro","Juan"};
+            String[] Clientes = GetClientList();
             for (int i = 0; i < Clientes.length; i++) {
-                Product temp = new Product("1", "2", "3", "4", "5", "6", Clientes[i], "8", "9", "10", "11", "12", "13");
+                Product temp = new Product(Clientes[i]);
                 productList.add(temp);
-                //initDatabase();
             }
             setConfigGrid();
-        return null;
+            return null;
         }
 
-
+    }
         private void setConfigGrid() {
             stubList = (ViewStub) findViewById(R.id.stub_list);
             //Inflate ViewStub before get view
@@ -149,15 +154,14 @@ public class GridActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     Intent intent = new Intent(getApplicationContext(), ClienteActivity.class);  //Instanciamos un intent, que es llamar a GridLayout
                     finish();
-                    Cliente = productList.get(i).getDate_p();
-                    intent.putExtra("Cliente",Cliente);
+                    Cliente = productList.get(i).getCliente();
+                    intent.putExtra("Cliente", Cliente);
                     startActivity(intent);
 
                 }
             });
         }
 
-    }
 
     @Override
     public void onBackPressed() {
@@ -165,12 +169,36 @@ public class GridActivity extends AppCompatActivity {
     }
 
 
+    public String[] GetClientList() {
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
+
+                "administracion", null, 1);
+        SQLiteDatabase bd = admin.getWritableDatabase();
+        Cursor fila = bd.rawQuery("select nombre_cliente from clientes", null);
+        fila.getCount();
+        String[] data = new String[fila.getCount()];
+        if (fila.moveToFirst()) {
+            for (int j=0;j < fila.getCount();j++) {
+                data[j] = fila.getString(0);
+                fila.moveToNext();
+            }
 
 
+            return data;
+        }
+        bd.close();
+        return null;
+    }
+
+    public void AddClient(String cliente){
+    AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getApplicationContext(), "administracion", null, 1);
+
+        SQLiteDatabase bd = admin.getWritableDatabase();
+        bd.execSQL("insert into clientes (nombre_cliente) VALUES ('"+ cliente +"')");
+        bd.close();
 
 
-
-
+     }
 
 }
 

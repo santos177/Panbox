@@ -35,14 +35,13 @@ public class ListViewAdapter extends ArrayAdapter<Product> {
        // TextView txtFolio = (TextView) v.findViewById(R.id.txtFolio);
         TextView txtDirection = (TextView) v.findViewById(R.id.txtDirection);
         TextView txtDate = (TextView) v.findViewById(R.id.txtDate);
-        Integer img_id = Integer.valueOf(product.getImageId());
         img.setImageResource(R.drawable.entrega);
 
 
-        txtTitle.setText(product.getTitle());
+        txtTitle.setText(product.getCliente());
        // txtFolio.setText("Documento n° ".concat(product.getDocument_n()));
        // txtDirection.setText(product.getDirection());
-        txtDate.setText(product.getDate_p());
+        txtDate.setText(product.getCliente());
         return v;
     }
 }

@@ -22,6 +22,10 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class SimpleTable {
 
 
@@ -43,9 +47,18 @@ public class SimpleTable {
             PdfWriter.getInstance(document,
                     new FileOutputStream(file.getAbsoluteFile()));
             document.open();
-            Paragraph titulo = new Paragraph("TITULO DEL ARCHIVO");
+            Paragraph titulo = new Paragraph("PANADERIA LA PALOMA");
             titulo.setAlignment(Element.ALIGN_CENTER);
             document.add(titulo);
+            Paragraph titulo2 = new Paragraph("Reparto Osvaldo");
+            titulo2.setAlignment(Element.ALIGN_CENTER);
+            document.add(titulo2);
+            DateFormat dateFormat = new SimpleDateFormat("MMM d,EEE,''yyyy");
+            Date date = new Date();
+            String fecha = date.toString();
+            Paragraph titulo3 = new Paragraph(fecha);
+            titulo3.setAlignment(Element.ALIGN_CENTER);
+            document.add(titulo3);
             document.add( Chunk.NEWLINE );
             PdfPTable table = new PdfPTable(6);
             String [] header ={"Cliente","Precio unitario","Total Pan","Saldo Anterior","Total","Saldo"};

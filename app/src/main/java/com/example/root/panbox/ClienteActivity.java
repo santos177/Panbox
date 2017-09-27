@@ -1,7 +1,10 @@
 package com.example.root.panbox;
 
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.Manifest;
@@ -11,6 +14,9 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.text.InputType;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +28,7 @@ import java.util.Date;
 import static android.os.Build.VERSION_CODES.M;
 import static com.example.root.panbox.R.id.button;
 
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
@@ -30,7 +37,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 
 
 public class ClienteActivity extends AppCompatActivity {
-
+    final Context context1 = this;
     Button photoButton,siguiente;
     private static final int CAMERA_REQUEST = 1888;
     private static final int CAMERA_PIC_REQUEST = 1111;
@@ -47,7 +54,45 @@ public class ClienteActivity extends AppCompatActivity {
     EditText precio_unitario,saldo_anterior,saldo,total, total_pan;
     Button button;
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.cliente_activity_settings, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.eliminar_cliente:
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        context1);
+                alertDialogBuilder.setTitle("¿Seguro que desea eliminar el Cliente?");
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("Aceptar",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                DeleteClient(nombre_cliente);
+                                Intent intent2 = new Intent(getApplicationContext(), GridActivity.class);  //Instanciamos un intent, que es llamar a GridLayout
+                                startActivity(intent2);
 
+                            }
+                        })
+                        .setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        });
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+                return true;
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +112,10 @@ public class ClienteActivity extends AppCompatActivity {
         //StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         //StrictMode.setVmPolicy(builder.build());
         getWindow().setBackgroundDrawableResource(R.drawable.gradient);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = new Date();
         setTitle(nombre_cliente);
        // setTitle("Nombre del Cliente");
         //Quitar multilinea
+
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String pu = precio_unitario.getText().toString();
@@ -181,7 +225,14 @@ public class ClienteActivity extends AppCompatActivity {
 
     }
 
+    public void DeleteClient(String cliente){
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getApplicationContext(), "administracion", null, 1);
+        SQLiteDatabase bd = admin.getWritableDatabase();
+        bd.execSQL("delete from clientes WHERE nombre_cliente='"+ cliente +"'");
+        bd.close();
 
+
+    }
 
 
 

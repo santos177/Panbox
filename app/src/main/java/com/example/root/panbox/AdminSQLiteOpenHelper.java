@@ -21,9 +21,9 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase db) {
 
-        //aquí creamos la tabla de usuario ( nombre_cliente, precio unitario, total pan,saldo anterior,total,saldo,tipo )  tipo: "0" = unidades, "1" = kilos
+        //aquí creamos la tabla de usuario ( nombre_cliente, precio unitario, total pan,saldo anterior,total,saldo,tipo)  tipo: "0" = unidades, "1" = kilos
         db.execSQL("create table clientes ( nombre_cliente text, precio_unitario integer, total_pan float, saldo_anterior integer, total integer, saldo integer, tipo integer)");
-        String [] Clientes= {"Palomo","Libertad","Alicia","Pedro","Juan"};
+        String [] Clientes= {"Palomo","Libertad","Alicia","Pedro","Juan","Pepe Tapia","Rafael Garay","Sam Sepiol"};
         for (int i = 0; i < Clientes.length; i++) {
             db.execSQL("insert into clientes (nombre_cliente) VALUES ('"+ Clientes[i] +"')");
         }
