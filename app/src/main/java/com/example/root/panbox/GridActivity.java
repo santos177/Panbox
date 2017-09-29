@@ -31,8 +31,6 @@ public class GridActivity extends AppCompatActivity {
     private ListViewAdapter listViewAdapter;
     List<Product> productList = new ArrayList<>();
     final Context context = this;
-    private Integer buffer = 0;
-    private Integer vacio = 0;
     String Cliente;
 
     @Override

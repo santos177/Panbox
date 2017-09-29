@@ -29,7 +29,7 @@ import java.util.Date;
 public class SimpleTable {
 
 
-    public Boolean write(String fname, String fcontent,String [] data) {
+    public Boolean write(String fname, String fcontent,String [] data,String [] balance,String[] bread) {
         try {
             String fpath = "/sdcard/" + fname + ".pdf";
             File file = new File(fpath);
@@ -67,6 +67,12 @@ public class SimpleTable {
             }
             for(int i = 0; i < data.length; i++){
                 table.addCell(data[i]);
+            }
+            table.addCell("TOTALES");  // fila de totales!
+            table.addCell(bread[0]+"uni"); // total de pan
+            table.addCell(bread[1]+"kgs");
+            for(int i = 0; i < balance.length; i++){  // saldo anterior total, dinero total, saldo total
+                table.addCell(balance[i]);
             }
             document.add(table);
             document.close();

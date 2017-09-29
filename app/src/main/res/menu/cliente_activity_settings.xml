@@ -6,5 +6,11 @@
         android:title="Eliminar Cliente"
         android:orderInCategory="150"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/medida"
+        android:title="Unidades/Kgs"
+        android:orderInCategory="150"
+        app:showAsAction="never" />
+
 
 </menu>
