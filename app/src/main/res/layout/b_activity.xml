@@ -82,12 +82,12 @@
                     />
 
                 <EditText
-                    android:id="@+id/unidades"
+                    android:id="@+id/unidades_p"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:maxLength="28"
-                    android:ems="10"
+                    android:ems="11"
                     android:background="@drawable/boton_cuadrado"
                     android:backgroundTint="#ffffff"
                     android:paddingLeft="15dp"
@@ -107,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#FFFF"
                     android:textSize="15sp"
-                    android:layout_below="@id/unidades"
+                    android:layout_below="@id/unidades_p"
                     android:layout_marginTop="10dp"
                     />
 

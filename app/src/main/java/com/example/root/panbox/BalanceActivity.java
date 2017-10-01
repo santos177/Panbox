@@ -23,7 +23,7 @@ import java.util.Date;
 
 public class BalanceActivity extends AppCompatActivity {
      EditText kilogramos, unidades,total_saldo_anterior,total_dinero,total_saldo;
-     Context context1;
+    final Context context1 = this;;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +31,7 @@ public class BalanceActivity extends AppCompatActivity {
         getWindow().setBackgroundDrawableResource(R.drawable.gradient);
         Button button2 = (Button) findViewById(R.id.generar_pdf);
         kilogramos = (EditText) findViewById(R.id.kgs);
-        unidades = (EditText) findViewById(R.id.unidades);
+        unidades = (EditText) findViewById(R.id.unidades_p);
         total_saldo_anterior = (EditText) findViewById(R.id.total_saldo_anterior);
         total_dinero = (EditText) findViewById(R.id.total_dinero);
         total_saldo= (EditText) findViewById(R.id.total_saldo);
@@ -39,8 +39,7 @@ public class BalanceActivity extends AppCompatActivity {
         GetBread();
         button2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                        context1);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context1);
                 alertDialogBuilder.setMessage("Es posible que se modifiquen las columnas de Saldos. ¿Desea Continuar?");
                 alertDialogBuilder
                         .setCancelable(false)
@@ -183,11 +182,15 @@ public class BalanceActivity extends AppCompatActivity {
                 }
                 suma_s = String.valueOf(suma);
                 if (i==0) { // se suman las unidades de pan
-                    unidades.setText(suma_s);
-                    bread[0] = suma_s;
+                    if(!suma_s.equals("null")) {
+                        unidades.setText(suma_s);
+                        bread[0] = suma_s;
+                    }
                 }else if (i==1){  // se suman los kilogramos de pan
-                    kilogramos.setText(suma_s);
-                    bread[1] = suma_s;
+                    if(!suma_s.equals("null")) {
+                        kilogramos.setText(suma_s);
+                        bread[1] = suma_s;
+                    }
                 }
             } else {
 

@@ -188,7 +188,6 @@ public class ClienteActivity extends AppCompatActivity {
 
                 if (Build.VERSION.SDK_INT >= M) {
                     requestPermissions(new String[]{
-                                    Manifest.permission.CAMERA,
                                     Manifest.permission.READ_EXTERNAL_STORAGE,
                                     Manifest.permission.WRITE_EXTERNAL_STORAGE},
                             MY_REQUEST_CODE);
@@ -221,11 +220,12 @@ public class ClienteActivity extends AppCompatActivity {
              precio_unitario.setText(fila.getString(0));
               String measure="";
              if(fila.getInt(5) == 1){
-                 measure = "kgs";
-             }else {
-                 measure = "uni.";
+                 measure = "kilogramos";
+             }else if (fila.getInt(5) == 0) {
+                 measure = "unidades";
              }
-            total_pan.setText(fila.getString(1)+measure);
+            total_pan.setHint(measure);
+            total_pan.setText(fila.getString(1));
             saldo_anterior.setText(fila.getString(2));
             total.setText(fila.getString(3));
             saldo.setText(fila.getString(4));
@@ -252,17 +252,17 @@ public class ClienteActivity extends AppCompatActivity {
         SQLiteDatabase bd = admin.getWritableDatabase();
         ContentValues registro = new ContentValues();
         registro.put("tipo", tipo);
+        String measure="";
+        if(tipo == 1){
+            measure = "kilogramos";
+        }else if (tipo == 0) {
+            measure = "unidades";
+        }
+        total_pan.setHint(measure);
         // los inserto en la base de datos
         int cant = bd.update("clientes", registro, "nombre_cliente='" + cliente + "'", null);
 
         bd.close();
-        if (cant == 1) {
-
-            Toast.makeText(getApplicationContext(), "Datos modificados con éxito", Toast.LENGTH_SHORT).show();
-            Consulta();
-        } else {
-            Toast.makeText(getApplicationContext(), "No existe usuario", Toast.LENGTH_SHORT).show();
-        }
 
     }
 

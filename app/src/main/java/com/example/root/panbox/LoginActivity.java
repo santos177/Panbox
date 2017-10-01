@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,7 +35,6 @@ public class LoginActivity extends AppCompatActivity {
     Button button;
     String correo,contrasena;
     String iniciar="iniciando";
-    public static final String SERVER_URL_REQUEST_LOGIN = "http://appdispatcher.ctac.cl/Dispatcher/getData.php";
 
     public void setPreferences (String var1) {  //Método para recordar que el usuario ya ha realizado un login
         SharedPreferences preferences = getSharedPreferences("mypreferences", MODE_PRIVATE);
@@ -48,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
         getWindow().setBackgroundDrawableResource(R.drawable.gradient);
-
 
 
         //-------------- SE VERIFICAN LOS PREFERENCES PARA VER SI EL USUARIO YA HA HECHO LOGIN O NO--------------------------

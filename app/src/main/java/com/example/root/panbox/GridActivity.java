@@ -39,7 +39,7 @@ public class GridActivity extends AppCompatActivity {
         setContentView(R.layout.grid_main);
 
         setTitle("Clientes");
-
+        setConfigGrid();
         //get list of product
         ListServicesRequest loadProfileRequest = new ListServicesRequest();
         loadProfileRequest.execute();
@@ -134,7 +134,6 @@ public class GridActivity extends AppCompatActivity {
                 Product temp = new Product(Clientes[i]);
                 productList.add(temp);
             }
-            setConfigGrid();
             return null;
         }
 
@@ -190,9 +189,9 @@ public class GridActivity extends AppCompatActivity {
 
     public void AddClient(String cliente){
     AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getApplicationContext(), "administracion", null, 1);
-
+        int tipo_default = 0;
         SQLiteDatabase bd = admin.getWritableDatabase();
-        bd.execSQL("insert into clientes (nombre_cliente) VALUES ('"+ cliente +"')");
+        bd.execSQL("insert into clientes (nombre_cliente,tipo) VALUES ('"+ cliente +"','"+ tipo_default +"')");
         bd.close();
 
 
