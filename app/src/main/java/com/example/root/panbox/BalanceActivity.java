@@ -130,7 +130,7 @@ public class BalanceActivity extends AppCompatActivity {
         String[] resultado = new String[3];
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "administracion", null, 1);
         SQLiteDatabase bd = admin.getWritableDatabase();
-        String[] column = {"saldo_anterior", "total", "saldo"};
+        String[] column = {"(saldo_anterior)", "(total)", "(saldo)"};
         for (int i=0; i < column.length;i++) {
             Cursor fila = bd.rawQuery("select " + column[i] + " from clientes ", null);
             if (fila.moveToFirst()) {
@@ -150,7 +150,7 @@ public class BalanceActivity extends AppCompatActivity {
                     resultado[1] = suma_s;
                 }else if(i==2){
                     total_saldo.setText(suma_s);
-                    resultado[0] = suma_s;
+                    resultado[2] = suma_s;
                 }
                  suma = 0;
             } else {
@@ -182,12 +182,12 @@ public class BalanceActivity extends AppCompatActivity {
                 }
                 suma_s = String.valueOf(suma);
                 if (i==0) { // se suman las unidades de pan
-                    if(!suma_s.equals("null")) {
+                    if(!suma_s.equals("")) {
                         unidades.setText(suma_s);
                         bread[0] = suma_s;
                     }
                 }else if (i==1){  // se suman los kilogramos de pan
-                    if(!suma_s.equals("null")) {
+                    if(!suma_s.equals("")) {
                         kilogramos.setText(suma_s);
                         bread[1] = suma_s;
                     }

@@ -26,7 +26,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
         String [] Clientes= {"Palomo","Libertad","Alicia","Pedro","Juan","Pepe Tapia","Rafael Garay","Sam Sepiol"};
         int tipo_default = 0;
         for (int i = 0; i < Clientes.length; i++) {
-            db.execSQL("insert into clientes (nombre_cliente,tipo) VALUES ('"+ Clientes[i] +"','"+ tipo_default +"')");
+            db.execSQL("insert into clientes (nombre_cliente,precio_unitario, saldo_anterior,total,saldo,tipo) VALUES ('"+ Clientes[i] +"','"+ tipo_default +"','"+ tipo_default +"','"+ tipo_default +"','"+ tipo_default +"','"+ tipo_default +"')");
         }
 
        // db.execSQL("insert into clientes (nombre_cliente,precio_unitario) values ('"+Clientes[0]+"','"+precio_unitario+"')");

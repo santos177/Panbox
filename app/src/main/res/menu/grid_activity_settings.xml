@@ -11,16 +11,7 @@
         android:title="Balance"
         android:orderInCategory="150"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/opcion_3"
-        android:title="opcion_3"
-        android:orderInCategory="150"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/opcion_4"
-        android:title="opcion_4"
-        android:orderInCategory="150"
-        app:showAsAction="never" />
+
     <item
         android:id="@+id/desconectar_grid"
         android:title="Cerrar Sesión"

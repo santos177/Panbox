@@ -21,6 +21,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,7 @@ public class GridActivity extends AppCompatActivity {
     private ListViewAdapter listViewAdapter;
     List<Product> productList = new ArrayList<>();
     final Context context = this;
+    Context context1 = this;
     String Cliente;
 
     @Override
@@ -87,9 +90,14 @@ public class GridActivity extends AppCompatActivity {
                         .setPositiveButton("Continuar",new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 String cliente = nombre_e.getText().toString();
-                                AddClient(cliente);
-                                Intent intent2 = new Intent(getApplicationContext(), GridActivity.class);  //Instanciamos un intent, que es llamar a GridLayout
-                                startActivity(intent2);
+                                if (!nombre_e.getText().toString().equals("")) {
+                                    AddClient(cliente);
+                                    Intent intent2 = new Intent(getApplicationContext(), GridActivity.class);  //Instanciamos un intent, que es llamar a GridLayout
+                                    startActivity(intent2);
+                                }else {
+                                      Toast.makeText(context1,"Error: Debe ingresar el nombre del Cliente",Toast.LENGTH_LONG).show();
+                                }
+
 
                             }
                         })
@@ -107,12 +115,7 @@ public class GridActivity extends AppCompatActivity {
                 finish();
                 startActivity(intent3);
                 return true;
-            case R.id.opcion_3:
 
-                return true;
-            case R.id.opcion_4:
-
-                return true;
             case R.id.desconectar_grid:
                 Intent intent4 = new Intent(getApplicationContext(), LoginActivity.class);  //Instanciamos un intent, que es llamar a GridLayout
                 finish();
@@ -191,7 +194,7 @@ public class GridActivity extends AppCompatActivity {
     AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getApplicationContext(), "administracion", null, 1);
         int tipo_default = 0;
         SQLiteDatabase bd = admin.getWritableDatabase();
-        bd.execSQL("insert into clientes (nombre_cliente,tipo) VALUES ('"+ cliente +"','"+ tipo_default +"')");
+        bd.execSQL("insert into clientes (nombre_cliente, precio_unitario, saldo_anterior,total,saldo,tipo) VALUES ('"+ cliente +"','"+ tipo_default +"','"+ tipo_default +"','"+ tipo_default +"','"+ tipo_default +"','"+ tipo_default +"')");
         bd.close();
 
 

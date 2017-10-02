@@ -74,6 +74,39 @@ public class SimpleTable {
             for(int i = 0; i < balance.length; i++){  // saldo anterior total, dinero total, saldo total
                 table.addCell(balance[i]);
             }
+            table.addCell("Repartos");
+            table.addCell("uni.");
+            table.addCell("kgs");
+            table.addCell("Tot. Bruto:$");
+            table.addCell("");
+            table.addCell("");
+            table.addCell("1er");
+            table.addCell("");
+            table.addCell("");
+            table.addCell("Sueldo: $");
+            table.addCell("");
+            table.addCell("");
+            table.addCell("2do");
+            table.addCell("");
+            table.addCell("");
+            table.addCell("Gastos: $");
+            table.addCell("");
+            table.addCell("");
+            table.addCell("3er");
+            table.addCell("");
+            table.addCell("");;
+            table.addCell("Total: $");
+            table.addCell("");
+            table.addCell("");
+            table.addCell("4to");
+            for(int i = 0; i < 5; i++){  // saldo anterior total, dinero total, saldo total
+                table.addCell("");
+            }
+            table.addCell("devolución");
+            for(int i = 0; i < 5; i++){  // saldo anterior total, dinero total, saldo total
+                table.addCell("");
+            }
+
             document.add(table);
             document.close();
             return true;
