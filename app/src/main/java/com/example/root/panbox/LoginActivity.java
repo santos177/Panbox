@@ -106,7 +106,10 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    //-------- PARTE EXTRA LOGIN FACEBOOK Y TWITTER -------
+    @Override
+    public void onBackPressed() {
+
+    }
 
 
 

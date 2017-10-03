@@ -152,7 +152,7 @@ public class ClienteActivity extends AppCompatActivity {
                     // convertimos el saldo a String:
                     String saldo_string = String.valueOf(saldo);
 
-                    Toast.makeText(getApplicationContext(), "precio unitario * total pan ="+print, Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getApplicationContext(), "precio unitario * total pan ="+print, Toast.LENGTH_SHORT).show();
                     ContentValues registro = new ContentValues();
 
                     registro.put("precio_unitario", pu);

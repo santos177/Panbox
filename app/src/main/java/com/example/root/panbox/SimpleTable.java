@@ -59,7 +59,6 @@ public class SimpleTable {
             Paragraph titulo3 = new Paragraph(fecha);
             titulo3.setAlignment(Element.ALIGN_CENTER);
             document.add(titulo3);
-            document.add( Chunk.NEWLINE );
             PdfPTable table = new PdfPTable(6);
             String [] header ={"Cliente","Precio unitario","Total Pan","Saldo Anterior","Total","Saldo"};
             for(int i = 0; i < header.length ; i++){

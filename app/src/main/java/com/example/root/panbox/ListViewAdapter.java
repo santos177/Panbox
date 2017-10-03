@@ -1,6 +1,8 @@
 package com.example.root.panbox;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -16,6 +19,7 @@ import java.util.List;
  */
 
 public class ListViewAdapter extends ArrayAdapter<Product> {
+    ImageView img;
     public ListViewAdapter(Context context, int resource, List<Product> objects) {
         super(context, resource, objects);
     }
@@ -30,18 +34,51 @@ public class ListViewAdapter extends ArrayAdapter<Product> {
             v = inflater.inflate(R.layout.list_item, null);
         }
         Product product = getItem(position);
-        ImageView img = (ImageView) v.findViewById(R.id.imageView);
+        img = (ImageView) v.findViewById(R.id.imageView);
         TextView txtTitle = (TextView) v.findViewById(R.id.txtTitle);
        // TextView txtFolio = (TextView) v.findViewById(R.id.txtFolio);
         TextView txtDirection = (TextView) v.findViewById(R.id.txtDirection);
-        TextView txtDate = (TextView) v.findViewById(R.id.txtDate);
-        img.setImageResource(R.drawable.entrega);
-
-
+        //TextView txtDate = (TextView) v.findViewById(R.id.txtDate);
         txtTitle.setText(product.getCliente());
+        ConsultaImagen(product.getCliente());
        // txtFolio.setText("Documento n° ".concat(product.getDocument_n()));
        // txtDirection.setText(product.getDirection());
-        txtDate.setText(product.getCliente());
+      //  txtDate.setText(product.getCliente());
         return v;
     }
+
+
+    public void ConsultaImagen(String cliente) {
+
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getContext(), "administracion", null, 1);
+        SQLiteDatabase bd = admin.getWritableDatabase();
+
+
+        Cursor fila = bd.rawQuery("SELECT tipo FROM clientes WHERE nombre_cliente='"+cliente+"'", null);
+
+        if (fila.moveToFirst()) {
+              if(fila.getInt(0) == 0){
+                  img.setImageResource(R.drawable.entrega);  // cliente que trabaja con unidades.
+
+        } else if (fila.getInt(0) == 1){
+                  img.setImageResource(R.drawable.retiro);  // cliente que trabaja con kilogramos.
+              }
+        }
+
+        bd.close();
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
