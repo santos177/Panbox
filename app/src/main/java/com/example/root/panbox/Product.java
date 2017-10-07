@@ -7,11 +7,12 @@ package com.example.root.panbox;
 public class Product {
 
     private String cliente;
+    private String cobro;
     //FIN CAMBIO JAIME
 
-    public Product(String cliente) {
+    public Product(String cliente,String cobro) {
         this.cliente = cliente;
-
+        this.cobro = cobro;
     }
 
     public String getCliente() {
@@ -20,6 +21,14 @@ public class Product {
 
     public void setCliente(String cliente) {
         this.cliente = cliente;
+    }
+
+    public String getCobro() {
+        return cobro;
+    }
+
+    public void setCobro(String cobro) {
+        this.cobro = cobro;
     }
 
 }

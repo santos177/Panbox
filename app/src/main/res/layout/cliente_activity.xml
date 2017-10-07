@@ -158,6 +158,35 @@
                     android:digits="1234567890"
 
                     />
+                <TextView
+                    android:id="@+id/t_ventadehoy"
+                    android:text="Venta de Hoy $"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFFF"
+                    android:textSize="15sp"
+                    android:layout_below="@id/hora"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <EditText
+                    android:id="@+id/e_ventadehoy"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:maxLength="28"
+                    android:ems="10"
+                    android:background="@drawable/boton_cuadrado"
+                    android:backgroundTint="#ffffff"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:layout_below="@id/t_ventadehoy"
+                    android:maxLines="1"
+                    android:layout_marginTop="10dp"
+                    android:inputType="phone"
+                    android:digits="1234567890"
+                    android:focusable="false"
+                    />
 
                 <TextView
                     android:id="@+id/t_cliente"
@@ -166,7 +195,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#FFFF"
                     android:textSize="15sp"
-                    android:layout_below="@id/hora"
+                    android:layout_below="@id/e_ventadehoy"
                     android:layout_marginTop="10dp"
                     />
 

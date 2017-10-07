@@ -42,7 +42,7 @@ public class ClienteActivity extends AppCompatActivity {
     private ImageView ivImage;
     Context context;
     String mCurrentPhotoPath,nombre_cliente;
-    EditText precio_unitario,saldo_anterior,saldo,total, total_pan;
+    EditText precio_unitario,saldo_anterior,saldo,total, total_pan,venta_de_hoy;
     Button button;
 
     @Override
@@ -99,7 +99,27 @@ public class ClienteActivity extends AppCompatActivity {
                 // create alert dialog
                 AlertDialog alert = alertDialog1.create();
                 alert.show();
+            case R.id.estado_cliente:
+                AlertDialog.Builder Dialog = new AlertDialog.Builder(
+                        context1);
+                Dialog.setTitle("Estado del Cliente");
+                Dialog
+                        .setCancelable(false)
+                        .setPositiveButton("Cancelado",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                ClientStatus(nombre_cliente,1);
 
+                            }
+                        })
+                        .setNegativeButton("No Cancelado",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                ClientStatus(nombre_cliente,0);
+                            }
+                        });
+                // create alert dialog
+                AlertDialog alertDialog2 = Dialog.create();
+                alertDialog2.show();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -117,6 +137,7 @@ public class ClienteActivity extends AppCompatActivity {
         saldo_anterior = (EditText) findViewById(R.id.fecha_hora);
         total = (EditText) findViewById(R.id.hora);
         saldo= (EditText) findViewById(R.id.e_saldo);
+        venta_de_hoy = (EditText) findViewById(R.id.e_ventadehoy);
         nombre_cliente = extras.getString("Cliente");
         Consulta();
         //Allowing Strict mode policy for Nougat support
@@ -148,6 +169,8 @@ public class ClienteActivity extends AppCompatActivity {
                     int saldo_anterior_int = Integer.parseInt(sa);
                     int total_int = Integer.parseInt(tl);
                     float print = (precio_unitario_int*total_pan_float);
+                    String print1 = String.valueOf(print);
+                    venta_de_hoy.setText(print1); // mostramos la venta de hoy (precio unitario*total de pan)
                     int saldo = (int) (saldo_anterior_int+(precio_unitario_int*total_pan_float) - total_int);
                     // convertimos el saldo a String:
                     String saldo_string = String.valueOf(saldo);
@@ -265,5 +288,24 @@ public class ClienteActivity extends AppCompatActivity {
         bd.close();
 
     }
+
+    public void ClientStatus(String cliente, int status){
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getApplicationContext(), "administracion", null, 1);
+        SQLiteDatabase bd = admin.getWritableDatabase();
+        ContentValues registro = new ContentValues();
+        int cobro = 0;
+        if(status == 1){
+            cobro = 1;    // cancelado
+        }else if (status == 0) {
+            cobro = 0;   // no cancelado
+        }
+        registro.put("cobro",cobro);
+        // los inserto en la base de datos
+           bd.update("clientes", registro, "nombre_cliente='" + cliente + "'", null);
+          bd.close();
+
+    }
+
+
 
 }

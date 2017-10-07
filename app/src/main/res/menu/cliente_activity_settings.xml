@@ -11,6 +11,10 @@
         android:title="Unidades/Kgs"
         android:orderInCategory="150"
         app:showAsAction="never" />
-
+    <item
+        android:id="@+id/estado_cliente"
+        android:title="Estado Cliente"
+        android:orderInCategory="150"
+        app:showAsAction="never" />
 
 </menu>

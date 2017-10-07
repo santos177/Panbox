@@ -133,8 +133,9 @@ public class GridActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             String[] Clientes = GetClientList();
+            String [] Cobro = GetCobro();
             for (int i = 0; i < Clientes.length; i++) {
-                Product temp = new Product(Clientes[i]);
+                Product temp = new Product(Clientes[i],Cobro[i]);
                 productList.add(temp);
             }
             return null;
@@ -190,11 +191,42 @@ public class GridActivity extends AppCompatActivity {
         return null;
     }
 
+
+    public String[] GetCobro() {
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
+
+                "administracion", null, 1);
+        SQLiteDatabase bd = admin.getWritableDatabase();
+        Cursor fila = bd.rawQuery("select cobro from clientes", null);
+        fila.getCount();
+        String[] data = new String[fila.getCount()];
+        if (fila.moveToFirst()) {
+            for (int j=0;j < fila.getCount();j++) {
+                data[j] = fila.getString(0);
+                fila.moveToNext();
+            }
+
+
+            return data;
+        }
+        bd.close();
+        return null;
+    }
+
+
+
+
+
+
+
+
+
+
     public void AddClient(String cliente){
     AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getApplicationContext(), "administracion", null, 1);
         int tipo_default = 0;
         SQLiteDatabase bd = admin.getWritableDatabase();
-        bd.execSQL("insert into clientes (nombre_cliente, precio_unitario, saldo_anterior,total,saldo,tipo) VALUES ('"+ cliente +"','"+ tipo_default +"','"+ tipo_default +"','"+ tipo_default +"','"+ tipo_default +"','"+ tipo_default +"')");
+        bd.execSQL("insert into clientes (nombre_cliente, precio_unitario, saldo_anterior,total,saldo,tipo,cobro) VALUES ('"+ cliente +"','"+ tipo_default +"','"+ tipo_default +"','"+ tipo_default +"','"+ tipo_default +"','"+ tipo_default +"','"+ tipo_default +"')");
         bd.close();
 
 

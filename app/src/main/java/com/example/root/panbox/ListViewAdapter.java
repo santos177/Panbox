@@ -41,9 +41,9 @@ public class ListViewAdapter extends ArrayAdapter<Product> {
         //TextView txtDate = (TextView) v.findViewById(R.id.txtDate);
         txtTitle.setText(product.getCliente());
         ConsultaImagen(product.getCliente());
-       // txtFolio.setText("Documento n° ".concat(product.getDocument_n()));
-       // txtDirection.setText(product.getDirection());
-      //  txtDate.setText(product.getCliente());
+        //txtFolio.setText("Documento n° ".concat(product.getDocument_n()));
+        txtDirection.setText(product.getCobro());
+        // txtDate.setText(product.getCliente());
         return v;
     }
 
