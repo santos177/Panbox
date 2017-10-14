@@ -197,7 +197,7 @@ public class GridActivity extends AppCompatActivity {
 
                 "administracion", null, 1);
         SQLiteDatabase bd = admin.getWritableDatabase();
-        Cursor fila = bd.rawQuery("select cobro from clientes", null);
+        Cursor fila = bd.rawQuery("SELECT cobro from clientes", null);
         fila.getCount();
         String[] data = new String[fila.getCount()];
         if (fila.moveToFirst()) {

@@ -42,7 +42,12 @@ public class ListViewAdapter extends ArrayAdapter<Product> {
         txtTitle.setText(product.getCliente());
         ConsultaImagen(product.getCliente());
         //txtFolio.setText("Documento n° ".concat(product.getDocument_n()));
-        txtDirection.setText(product.getCobro());
+        if (product.getCobro().equals("0")){
+            txtDirection.setText("");
+        } else if (product.getCobro().equals("1")) {
+            txtDirection.setText("Cobrado");
+        }
+
         // txtDate.setText(product.getCliente());
         return v;
     }

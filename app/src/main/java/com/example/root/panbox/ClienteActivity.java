@@ -99,19 +99,20 @@ public class ClienteActivity extends AppCompatActivity {
                 // create alert dialog
                 AlertDialog alert = alertDialog1.create();
                 alert.show();
+                return true;
             case R.id.estado_cliente:
                 AlertDialog.Builder Dialog = new AlertDialog.Builder(
                         context1);
                 Dialog.setTitle("Estado del Cliente");
                 Dialog
                         .setCancelable(false)
-                        .setPositiveButton("Cancelado",new DialogInterface.OnClickListener() {
+                        .setPositiveButton("Cobrado",new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 ClientStatus(nombre_cliente,1);
 
                             }
                         })
-                        .setNegativeButton("No Cancelado",new DialogInterface.OnClickListener() {
+                        .setNegativeButton("No Cobrado",new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 ClientStatus(nombre_cliente,0);
                             }

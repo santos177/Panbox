@@ -36,7 +36,8 @@
         android:layout_below="@id/txtTitle"
         android:layout_marginTop="1dp"
         android:maxLines="2"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/black" />
 
 
 </RelativeLayout>
