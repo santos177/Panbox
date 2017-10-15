@@ -212,6 +212,7 @@ public void   UpdateSaldo(){   // traspasamos la información del saldo de hoy, 
     bd.execSQL("UPDATE clientes SET saldo = 0");
     bd.execSQL("UPDATE clientes SET total = 0");
     bd.execSQL("UPDATE clientes SET total_pan = 0");
+    bd.execSQL("UPDATE clientes SET cobro = 0");
     bd.close();
 
 
