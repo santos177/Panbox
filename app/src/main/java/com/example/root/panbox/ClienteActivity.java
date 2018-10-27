@@ -2,6 +2,7 @@ package com.example.root.panbox;
 
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AlertDialog;
@@ -24,7 +25,11 @@ import android.widget.ImageView;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
 import static android.os.Build.VERSION_CODES.M;
 import static com.example.root.panbox.R.id.button;
 
@@ -52,6 +57,34 @@ public class ClienteActivity extends AppCompatActivity {
         inflater.inflate(R.menu.cliente_activity_settings, menu);
         return true;
     }
+
+    void calculator () {
+        ArrayList<HashMap<String, Object>> items = new ArrayList<HashMap<String, Object>>();
+
+        final PackageManager pm = getPackageManager();
+        List<PackageInfo> packs = pm.getInstalledPackages(0);
+        for (PackageInfo pi : packs) {
+            if (pi.packageName.toLowerCase().contains("calcul")) {
+                HashMap<String, Object> map = new HashMap<String, Object>();
+                map.put("appName", pi.applicationInfo.loadLabel(pm));
+                map.put("packageName", pi.packageName);
+                items.add(map);
+            }
+        }
+
+        if(items.size()>=1){
+            String packageName = (String) items.get(0).get("packageName");
+            Intent i = pm.getLaunchIntentForPackage(packageName);
+            if (i != null)
+                startActivity(i);
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "Calculadora No Encontrada", Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -120,6 +153,10 @@ public class ClienteActivity extends AppCompatActivity {
                 // create alert dialog
                 AlertDialog alertDialog2 = Dialog.create();
                 alertDialog2.show();
+                return true;
+
+            case R.id.calculadora:
+                calculator();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -218,6 +255,9 @@ public class ClienteActivity extends AppCompatActivity {
                 }
             }
         }
+
+
+
 
     }
 

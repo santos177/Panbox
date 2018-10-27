@@ -31,7 +31,8 @@
         </activity>
         <activity android:name=".GridActivity" />
         <activity android:name=".ClienteActivity" />
-        <activity android:name=".BalanceActivity"></activity>
+        <activity android:name=".BalanceActivity" />
+        <activity android:name=".CalculatorActivity"></activity>
     </application>
 
 </manifest>

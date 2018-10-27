@@ -110,6 +110,7 @@ public class GridActivity extends AppCompatActivity {
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
                 return true;
+
             case R.id.balance:
                 Intent intent3 = new Intent(getApplicationContext(), BalanceActivity.class);  //Instanciamos un intent, que es llamar a GridLayout
                 finish();

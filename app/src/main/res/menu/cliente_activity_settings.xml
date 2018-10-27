@@ -16,5 +16,9 @@
         android:title="Estado Cliente"
         android:orderInCategory="150"
         app:showAsAction="never" />
-
+    <item
+        android:id="@+id/calculadora"
+        android:title="Calculadora"
+        android:orderInCategory="150"
+        app:showAsAction="never" />
 </menu>
